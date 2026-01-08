@@ -1,0 +1,134 @@
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@100;200;300;400;500;600;700&family=Noto+Sans+Thai:wght@100..900&display=swap');
+@import "tailwindcss";
+
+
+:root {
+  /* Default: Light mode (white) */
+  --background-rgb: 255, 255, 255;
+  --foreground-rgb: 0, 0, 0;
+}
+
+/* Dark mode - can be toggled by adding 'dark' class to html or body */
+.dark,
+[data-theme="dark"] {
+  --background-rgb: 0, 0, 0;
+  --foreground-rgb: 255, 255, 255;
+}
+
+body {
+  background: rgb(var(--background-rgb));
+  color: rgb(var(--foreground-rgb));
+  font-family: "IBM Plex Sans Thai", sans-serif;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slide-up {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slide-in-left {
+  from {
+    opacity: 0;
+    transform: translateX(-100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.animate-slide-in-left {
+  animation: slide-in-left 0.3s ease-out;
+}
+
+.animate-fade-in {
+  animation: fade-in 1s ease-out;
+}
+
+.animate-fade-in-delay {
+  animation: fade-in 1s ease-out 0.6s both;
+}
+
+.animate-slide-up {
+  animation: slide-up 0.8s ease-out;
+}
+
+.animate-slide-up-delay {
+  animation: slide-up 0.8s ease-out 0.3s both;
+}
+
+.animate-bounce-delay-0 {
+  animation: bounce 1s infinite;
+  animation-delay: 0s;
+}
+
+.animate-bounce-delay-1 {
+  animation: bounce 1s infinite;
+  animation-delay: 0.2s;
+}
+
+.animate-bounce-delay-2 {
+  animation: bounce 1s infinite;
+  animation-delay: 0.4s;
+}
+
+/* Mysterious dark orange theme */
+.bg-dark-orange-mysterious {
+  background: #0a0a0a;
+  background-image: 
+    radial-gradient(at 0% 0%, rgba(154, 52, 18, 0.15) 0%, transparent 50%),
+    radial-gradient(at 100% 100%, rgba(124, 45, 18, 0.12) 0%, transparent 50%),
+    radial-gradient(at 50% 50%, rgba(194, 65, 12, 0.08) 0%, transparent 50%);
+}
+
+.bg-mysterious-glow {
+  background: radial-gradient(circle at center, rgba(234, 88, 12, 0.1) 0%, transparent 70%);
+}
+
+@keyframes pulse-slow {
+  0%, 100% {
+    opacity: 0.2;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.4;
+    transform: scale(1.1);
+  }
+}
+
+.animate-pulse-slow {
+  animation: pulse-slow 4s ease-in-out infinite;
+}
+
+.animate-pulse-slow-delay {
+  animation: pulse-slow 4s ease-in-out infinite;
+  animation-delay: 2s;
+}
+
+.text-shadow-mysterious {
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.3), 0 0 20px rgba(255, 255, 255, 0.2), 0 4px 8px rgba(0, 0, 0, 0.5);
+}
+
+.drop-shadow-logo {
+  filter: drop-shadow(0 0 15px rgba(234, 88, 12, 0.3)) drop-shadow(0 0 30px rgba(234, 88, 12, 0.2)) drop-shadow(0 4px 12px rgba(0, 0, 0, 0.4));
+}
+
+.shadow-glow-white {
+  box-shadow: 0 0 8px rgba(255, 255, 255, 0.6), 0 0 16px rgba(255, 255, 255, 0.3);
+}
