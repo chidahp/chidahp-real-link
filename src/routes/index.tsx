@@ -1,5 +1,5 @@
 import { For, createResource, Suspense, onMount } from "solid-js";
-import { ExternalLink } from "lucide-solid";
+import { ExternalLink, Lock } from "lucide-solid";
 
 // Static profile data
 const profileData = {
@@ -95,28 +95,52 @@ export default function Home() {
             <For each={links()}>
               {(link) => (
                 <a
-                  href={link.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  class="group relative w-full flex items-center rounded-full bg-white/90 backdrop-blur px-4 py-3 shadow-sm ring-1 ring-black/5 hover:shadow-md hover:-translate-y-0.5 transition-all duration-200"
+                  href={link.disabled ? "javascript:void(0)" : link.url}
+                  target={link.disabled ? undefined : "_blank"}
+                  rel={link.disabled ? undefined : "noopener noreferrer"}
+                  class="group relative w-full flex items-center rounded-full px-4 py-3 shadow-sm ring-1 transition-all duration-300 overflow-hidden"
+                  classList={{
+                    "bg-white/90 backdrop-blur ring-black/5 hover:shadow-md hover:-translate-y-0.5 active:scale-[0.98]": !link.disabled,
+                    "bg-gray-50/50 ring-gray-200 cursor-not-allowed grayscale": link.disabled
+                  }}
+                  onClick={(e) => link.disabled && e.preventDefault()}
                 >
                   {/* Icon Image */}
-                  <div class="w-11 h-11 rounded-2xl overflow-hidden shrink-0 border border-gray-100 shadow-sm bg-white">
+                  <div 
+                    class="w-11 h-11 rounded-2xl overflow-hidden shrink-0 border shadow-sm bg-white transition-all duration-300"
+                    classList={{
+                      "border-gray-100": !link.disabled,
+                      "border-gray-200 opacity-50": link.disabled
+                    }}
+                  >
                     <img
                       src={link.icon}
                       alt={link.title}
-                      class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
+                      class="w-full h-full object-cover transition-transform duration-300"
+                      classList={{
+                        "group-hover:scale-110": !link.disabled
+                      }}
                     />
                   </div>
 
                   {/* Text */}
-                  <span class="flex-1 text-center font-semibold text-gray-900 group-hover:text-gray-700 truncate px-3">
+                  <span 
+                    class="flex-1 text-center font-semibold truncate px-3 transition-colors duration-300"
+                    classList={{
+                      "text-gray-900 group-hover:text-gray-700": !link.disabled,
+                      "text-gray-400": link.disabled
+                    }}
+                  >
                     {link.title}
                   </span>
 
                   {/* More Icon */}
                   <div class="shrink-0">
-                    <ExternalLink class="w-4 h-4 text-gray-400 group-hover:text-gray-600" />
+                    {link.disabled ? (
+                      <Lock class="w-4 h-4 text-gray-300" />
+                    ) : (
+                      <ExternalLink class="w-4 h-4 text-gray-400 group-hover:text-gray-600" />
+                    )}
                   </div>
                 </a>
               )}
