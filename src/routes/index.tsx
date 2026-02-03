@@ -4,6 +4,7 @@ import { ExternalLink, Lock } from "lucide-solid";
 // Static profile data
 const profileData = {
   logo: "/chidahp.webp",
+  realLogo: "/real.png",
   name: "สำนักพิมพ์ชี้ดาบ - chidahp",
   tagline: "สำนักพิมพ์ที่ว่าด้วยการเติบโต",
   socialLinks: [
@@ -114,7 +115,7 @@ export default function Home() {
                     }}
                   >
                     <img
-                      src={link.icon}
+                      src={link.icon ? link.icon : './real.png'}
                       alt={link.title}
                       class="w-full h-full object-cover transition-transform duration-300"
                       classList={{
