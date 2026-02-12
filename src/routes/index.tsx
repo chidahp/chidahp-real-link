@@ -41,7 +41,7 @@ const NOCO_API_URL =
   "https://noco.topspin.space/api/v2/tables/malc2fpvoe46aix/records";
 const GOOGLE_FALLBACK_URL =
   "https://script.google.com/macros/s/AKfycbwFCtCMpwfbOynRMqXI0W_4kTryUIY-SaW7rbajnpLxBa3W67YAfcZk9XjnSxCXpYoRYw/exec";
-const API_TOKEN = import.meta.env?.API_TOKEN ?? "";
+const API_TOKEN = import.meta.env?.API_TOKEN ?? process.env.API_TOKEN ?? "";
 
 function normalizeRow(row: Record<string, unknown>) {
   const d = row.disabled ?? row.Disabled;
