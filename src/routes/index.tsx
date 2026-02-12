@@ -1,5 +1,6 @@
 import { For, createResource, Suspense, onMount } from "solid-js";
 import { ExternalLink, Lock } from "lucide-solid";
+import axios from "axios";
 
 // Static profile data
 const profileData = {
@@ -35,18 +36,50 @@ const profileData = {
   ],
 };
 
-// API endpoint
-const API_URL =
+// API endpoints
+const NOCO_API_URL =
+  "https://noco.topspin.space/api/v2/tables/malc2fpvoe46aix/records";
+const GOOGLE_FALLBACK_URL =
   "https://script.google.com/macros/s/AKfycbwFCtCMpwfbOynRMqXI0W_4kTryUIY-SaW7rbajnpLxBa3W67YAfcZk9XjnSxCXpYoRYw/exec";
+const API_TOKEN = import.meta.env?.API_TOKEN ?? "";
 
-// Fetch links from API
+function normalizeRow(row: Record<string, unknown>) {
+  const d = row.disabled ?? row.Disabled;
+  const disabled =
+    d === true || (typeof d === "string" && String(d).toUpperCase() === "TRUE");
+  return {
+    title: String(row.title ?? row.Title ?? ""),
+    url: String(row.url ?? row.Url ?? ""),
+    icon:
+      row.icon != null && row.icon !== ""
+        ? String(row.icon)
+        : row.Icon != null && row.Icon !== ""
+          ? String(row.Icon)
+          : undefined,
+    iconBg:
+      row.iconBg != null && String(row.iconBg).trim() !== ""
+        ? String(row.iconBg)
+        : undefined,
+    disabled,
+  };
+}
+
+// Fetch links: try NocoDB first, fallback to Google Apps Script
 async function fetchLinks() {
-  const response = await fetch(API_URL);
-  if (!response.ok) {
-    throw new Error("Failed to fetch links");
+  try {
+    const { data } = await axios.get<{ list?: unknown[] }>(NOCO_API_URL, {
+      headers: { "xc-token": API_TOKEN },
+    });
+    console.log('1')
+    const list = data?.list ?? data;
+    const rows = Array.isArray(list) ? list : [];
+    return rows.map((row) => normalizeRow(row as Record<string, unknown>));
+  } catch {
+    const { data } = await axios.get<unknown>(GOOGLE_FALLBACK_URL);
+    console.log('2')
+    const rows = Array.isArray(data) ? data : [];
+    return rows.map((row) => normalizeRow(row as Record<string, unknown>));
   }
-  const data = await response.json();
-  return data;
 }
 
 export default function Home() {
@@ -107,12 +140,14 @@ export default function Home() {
                   onClick={(e) => link.disabled && e.preventDefault()}
                 >
                   {/* Icon Image */}
-                  <div 
-                    class="w-11 h-11 rounded-2xl overflow-hidden shrink-0 border shadow-sm bg-white transition-all duration-300"
+                  <div
+                    class="w-11 h-11 rounded-2xl overflow-hidden shrink-0 border shadow-sm transition-all duration-300"
                     classList={{
-                      "border-gray-100": !link.disabled,
-                      "border-gray-200 opacity-50": link.disabled
+                      "border-gray-100 bg-white": !link.disabled && !link.iconBg,
+                      "border-gray-200 opacity-50 bg-white": link.disabled,
+                      "border-gray-100": !link.disabled && !!link.iconBg,
                     }}
+                    style={link.iconBg ? { "background-color": link.iconBg } : undefined}
                   >
                     <img
                       src={link.icon ? link.icon : './real.png'}
