@@ -38,7 +38,7 @@ const profileData = {
 
 // API endpoints
 const NOCO_API_URL =
-  "https://noco.topspin.space/api/v2/tables/malc2fpvoe46aix/records";
+  "https://noco.topspin.space/api/v2/tables/mov7e6ig2bb4h26/records";
 const GOOGLE_FALLBACK_URL =
   "https://script.google.com/macros/s/AKfycbwFCtCMpwfbOynRMqXI0W_4kTryUIY-SaW7rbajnpLxBa3W67YAfcZk9XjnSxCXpYoRYw/exec";
 const API_TOKEN = import.meta.env?.API_TOKEN ?? process.env.API_TOKEN ?? "";
