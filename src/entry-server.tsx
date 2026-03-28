@@ -11,9 +11,9 @@ export default createHandler(() => (
           <link rel="icon" href="/favicon.ico" />
           <title>สำนักพิมพ์ชี้ดาบ - chidahp</title>
           <meta name="facebook-domain-verification" content="bcjvgx71le5tk1mlh1x1jchd8cfyla" />
-          {/* Google AdSense */}
+          {/* Google AdSense
           <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8360416910031647" crossorigin="anonymous"></script>
-          
+           */}
           {/* Google analytics */}
           <script
             async
